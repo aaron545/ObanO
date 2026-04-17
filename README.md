@@ -34,7 +34,7 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 - 📌 **Advanced Safety & Captcha Detection**  
   The bot now intelligently monitors messages for human verification requests ⚠️.  
-  If a **Captcha** or "real human" check is detected, the bot will instantly kill all activities to protect your account from being banned 🔥.
+  If a **Captcha** or "real human" check is detected, the bot will stop 🔥.
 
 - 📌 **Dynamic Command Control**  
   Introduced `start ban` and `stop ban` commands to control the bot in real-time 🎮.  

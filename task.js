@@ -52,6 +52,10 @@ async function startAutoCatch(client) {
   while (true) {
     if (isRestTime()) {
       helper.msgLogger("🌙 現在是固定休息時間 (01:00 - 07:30)，暫停運作中... 🌙");
+      autowb = false;
+      autowh = false;
+      helper.msgLogger(`set autowb = ${autowb}`);
+      helper.msgLogger(`set autowh = ${autowh}`);
       await delay(600000); // 每十分鐘 (600,000ms) 檢查一次是否還在休息時段
       continue;
     }
@@ -67,7 +71,7 @@ async function startAutoCatch(client) {
     await randomDelay(27, 9);
 
     if (restCheck(restprob)) {
-      helper.msgLogger("🕖Trigger random rest, zzz......🕖")
+      helper.msgLogger("🕖 Trigger random rest, zzz...... 🕖")
       await randomDelay(900, 300); // 10-20分鐘
     }
   }
@@ -125,7 +129,7 @@ async function checkMessageCreate(message, client){
   }
 
   if (helper.cleanText(message.content).includes("are you a real human") || helper.cleanText(message.content).includes("verify that you are human")) {
-    helper.msgLogger("🔥🔥🔥There is a captcha🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥 There is a captcha 🔥🔥🔥");
     autowb = false;
     autowh = false;
     helper.msgLogger(`set autowb = ${autowb}`);

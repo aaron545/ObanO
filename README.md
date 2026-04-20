@@ -16,7 +16,17 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🔗 Versions
 
-[1.0.0](#v100)
+[1.0.1](#v101) | [1.0.0](#v100)
+
+---
+
+## [v1.0.1] - 2026-04-20 <a id="v101"></a>
+
+### 🛠 Fixed
+- **Time Format Correction**: Fixed an issue where the log timestamp displayed `24:00` at midnight. It now correctly resets to `00:00` using the `h23` hour cycle. ⏰
+
+### ✨ Added
+- **New Command Option**: Introduced a new parameter for the ban command: `start ban {option}`. The specific functionality is for you to discover! 🔍🤫
 
 ---
 

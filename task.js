@@ -3,6 +3,7 @@ const { ownchannelId } = require('./config.json');
 
 let autowb = true;
 let autowh = true;
+let autoowo = false;
 
 let restprob = 5;
 
@@ -59,14 +60,19 @@ async function startAutoCatch(client) {
       await delay(600000); // 每十分鐘 (600,000ms) 檢查一次是否還在休息時段
       continue;
     }
+    if (autoowo) {
+      await safeSend(channel, "owo");
+      await randomDelay(1, 0.2);
+    }
 
     if (autowb) {
       await safeSend(channel, "wb");
+      await randomDelay(1, 0.2);
     }
-    await randomDelay(1, 0.2);
 
     if (autowh) {
       await safeSend(channel, "wh");
+      await randomDelay(1, 0.2);
     }
     await randomDelay(27, 9);
 
@@ -96,6 +102,11 @@ async function checkMessageCreate(message, client){
       autowh = true;
       hasMatched = true;
     }
+    if (helper.cleanText(message.content).includes("owo")) {
+      autoowo = true;
+      hasMatched = true;
+      helper.msgLogger(`set autoowo = ${autoowo}`);
+    }
     if (!hasMatched) {
       autowb = true;
       autowh = true;
@@ -113,6 +124,11 @@ async function checkMessageCreate(message, client){
     if (helper.cleanText(message.content).includes("wh")) {
       autowh = false;
       hasMatched = true;
+    }
+    if (helper.cleanText(message.content).includes("owo")) {
+      autoowo = false;
+      hasMatched = true;
+      helper.msgLogger(`set autoowo = ${autoowo}`);
     }
     if (!hasMatched) {
       autowb = false;

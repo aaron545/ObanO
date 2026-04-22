@@ -148,8 +148,10 @@ async function checkMessageCreate(message, client){
     helper.msgLogger("🔥🔥🔥 There is a captcha 🔥🔥🔥");
     autowb = false;
     autowh = false;
+    autoowo = false;
     helper.msgLogger(`set autowb = ${autowb}`);
     helper.msgLogger(`set autowh = ${autowh}`);
+    helper.msgLogger(`set autoowo = ${autoowo}`);
   }
 
 }

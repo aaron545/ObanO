@@ -16,7 +16,14 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🔗 Versions
 
-[1.0.1](#v101) | [1.0.0](#v100)
+[1.0.2](#v102) | [1.0.1](#v101) | [1.0.0](#v100)
+
+---
+
+## [v1.0.2] - 2026-04-22 <a id="v102"></a>
+
+### 🛠 Fixed
+- **Captcha Logic Fix**: Resolved an issue where the `ban` status was not correctly set to `false` upon detecting a captcha. This ensures the bot properly halts all activities during human verification to prevent detection. 🛡️🛑
 
 ---
 
@@ -30,9 +37,9 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ---
 
-### [v1.0.0] - 2026-04-17 <a id="v100"></a>
+## [v1.0.0] - 2026-04-17 <a id="v100"></a>
 
-#### Added
+### Added
 - 📌 **Auto WB & WH Loop**  
   Implemented a core loop that automatically sends "wb" and "wh" commands to your designated channel 🔄.  
   Includes `randomDelay` logic to ensure human-like behavior and bypass basic detection 🛡️.

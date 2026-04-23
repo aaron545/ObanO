@@ -24,9 +24,7 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🚀 Added
 - **Safety Threshold Debugging**: Added a proactive logging system that triggers when the `count` is within 10 units of the `MAXCOUNT`, allowing for better monitoring of bot activity levels. ⚠️
-- **Auto-Rest Reset Logic**: 
-    - **Count-Based Rest**: The bot now automatically triggers a long rest period (20-30 minutes) upon reaching the `MAXCOUNT` threshold to simulate human-like behavior.
-    - **Counter Reset**: The `count` is now automatically reset to 0 whenever a rest period is triggered (either by count limit or random probability), ensuring a fresh cycle for each active session. 💤🔄
+- **New Auto-Rest Reset Logic**: The bot now automatically triggers a long rest period (20-30 minutes) upon reaching the `MAXCOUNT` threshold.
 
 ---
 

@@ -4,6 +4,8 @@ const { ownchannelId } = require('./config.json');
 let autowb = true;
 let autowh = true;
 let autoowo = false;
+let count = 0;
+const MAXCOUNT = 200;
 
 let restprob = 5;
 
@@ -66,6 +68,12 @@ async function startAutoCatch(client) {
     }
 
     if (autowb) {
+      count += 1;
+
+      if (count > MAXCOUNT-10) {
+        helper.msgDebugger(`count = ${count}`);
+      }
+
       await safeSend(channel, "wb");
       await randomDelay(1, 0.2);
     }
@@ -77,8 +85,13 @@ async function startAutoCatch(client) {
     await randomDelay(27, 9);
 
     if (restCheck(restprob)) {
-      helper.msgLogger("🕖 Trigger random rest, zzz...... 🕖")
+      helper.msgLogger("🕖 Trigger rest by random, zzz...... 🕖")
+      count = 0;
       await randomDelay(900, 300); // 10-20分鐘
+    } else if (count >= MAXCOUNT) {
+      helper.msgLogger("🕖 Trigger rest by count, zzz...... 🕖")
+      count = 0;
+      await randomDelay(1500, 300); // 20-30分鐘
     }
   }
 }

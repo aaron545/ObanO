@@ -16,7 +16,17 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🔗 Versions
 
-[1.0.2](#v102) | [1.0.1](#v101) | [1.0.0](#v100)
+[1.0.3](#v103) | [1.0.2](#v102) | [1.0.1](#v101) | [1.0.0](#v100)
+
+---
+
+## [v1.0.3] - 2026-04-23 <a id="v103"></a>
+
+### 🚀 Added
+- **Safety Threshold Debugging**: Added a proactive logging system that triggers when the `count` is within 10 units of the `MAXCOUNT`, allowing for better monitoring of bot activity levels. ⚠️
+- **Auto-Rest Reset Logic**: 
+    - **Count-Based Rest**: The bot now automatically triggers a long rest period (20-30 minutes) upon reaching the `MAXCOUNT` threshold to simulate human-like behavior.
+    - **Counter Reset**: The `count` is now automatically reset to 0 whenever a rest period is triggered (either by count limit or random probability), ensuring a fresh cycle for each active session. 💤🔄
 
 ---
 
@@ -55,7 +65,7 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 - 📌 **Dynamic Command Control**  
   Introduced `start ban` and `stop ban` commands to control the bot in real-time 🎮.  
-  You can specify targets like `start ban wb` or `stop ban wh`, or use the commands alone to toggle everything at once.
+  You can specify targets like `start ban {option}`
 
 - 📌 **Resource Monitoring**  
-  Added a monitor for Cowoncy consumption. If the bot detects you have run out of currency (e.g., "spent 5 cowoncy" fail), it will automatically disable relevant functions to prevent useless spamming 💎.
+  Added a monitor for Gem consumption. If the bot detects you have run out of gems, it will automatically disable relevant functions to prevent useless spamming 💎.

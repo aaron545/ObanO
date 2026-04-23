@@ -20,7 +20,7 @@ function msgLogger(msg) {
 
 function msgDebugger(msg) {
   const now = new Date();
-  const formattedTime = now.toLocaleString("zh-TW", { timeZone: "Asia/Taipei", hour12: false }); // 轉成 "YYYY-MM-DD HH:MM:SS"
+  const formattedTime = now.toLocaleString("zh-TW-u-hc-h23", { timeZone: "Asia/Taipei", hour12: false }); // 轉成 "YYYY-MM-DD HH:MM:SS"
   console.log(`[${formattedTime}] --Debug-- ${msg}`);
 }
 

@@ -5,6 +5,8 @@ let autowb = true;
 let autowh = true;
 let autoowo = false;
 let count = 0;
+let hotmode = false;
+
 const MAXCOUNT = 200;
 
 let restprob = 5;
@@ -82,17 +84,23 @@ async function startAutoCatch(client) {
       await safeSend(channel, "wh");
       await randomDelay(1, 0.2);
     }
-    await randomDelay(27, 9);
 
-    if (restCheck(restprob)) {
-      helper.msgLogger("🕖 Trigger rest by random, zzz...... 🕖")
-      count = 0;
-      await randomDelay(900, 300); // 10-20分鐘
-    } else if (count >= MAXCOUNT) {
-      helper.msgLogger("🕖 Trigger rest by count, zzz...... 🕖")
-      count = 0;
-      await randomDelay(1500, 300); // 20-30分鐘
+    if (hotmode) {
+      await randomDelay(18, 2);
+    } else {
+      await randomDelay(27, 9);
+
+      if (restCheck(restprob)) {
+        helper.msgLogger("🕖 Trigger rest by random, zzz...... 🕖")
+        count = 0;
+        await randomDelay(900, 300); // 10-20分鐘
+      } else if (count >= MAXCOUNT) {
+        helper.msgLogger("🕖 Trigger rest by count, zzz...... 🕖")
+        count = 0;
+        await randomDelay(1500, 300); // 20-30分鐘
+      }
     }
+    
   }
 }
 
@@ -100,55 +108,74 @@ async function checkMessageCreate(message, client){
   const { title, desc, embedAuthor, footer, image_url } = helper.messageExtractor(message);
   const mentionUser = `<@${client.user.id}>`;
   const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+  const channel = client.channels.cache.get(ownchannelId);
 
   if (embedAuthor.includes(client.user.globalName) && embedAuthor.includes("goes into battle!") && message.author.username == "OwO") {
     helper.msgLogger(footer);
   }
 
-  if (message.content.startsWith("start ban") && message.author.username == client.user.username ) {
-    let hasMatched = false;
-    if (helper.cleanText(message.content).includes("wb")) {
-      autowb = true;
-      hasMatched = true;
-    }
-    if (helper.cleanText(message.content).includes("wh")) {
-      autowh = true;
-      hasMatched = true;
-    }
-    if (helper.cleanText(message.content).includes("owo")) {
-      autoowo = true;
-      hasMatched = true;
-      helper.msgLogger(`set autoowo = ${autoowo}`);
-    }
-    if (!hasMatched) {
-      autowb = true;
-      autowh = true;
-    }
-    helper.msgLogger(`set autowb = ${autowb}`);
-    helper.msgLogger(`set autowh = ${autowh}`);
-  }
+  // 確保是本人發出且以 & 開頭
+  if (message.author.username === client.user.username && message.content.startsWith('&')) {
+    
+    // 1. 去除前綴並清洗文字
+    const cleanContent = helper.cleanText(message.content.slice(1)); 
+    const parts = cleanContent.split(/\s+/); // 分割成陣列
+    
+    const action = parts[0]; // start, stop, 或其他
+    const target = parts[1]; // ban, hotmode
+    const subTarget = parts[2]; // wb, wh, owo
 
-  if (helper.cleanText(message.content).includes("stop ban") && message.author.username == client.user.username ) {
-    let hasMatched = false;
-    if (helper.cleanText(message.content).includes("wb")) {
-      autowb = false;
-      hasMatched = true;
+    // --- 處理 &status 指令 ---
+    if (action === "status") {
+      const getStatus = (val) => val ? "[ON]" : "[OFF]"; // 輔助小函數
+
+      const statusMsg = [
+        `Current Settings:`,
+        ` - autowb:   ${getStatus(autowb)}`,
+        ` - autowh:   ${getStatus(autowh)}`,
+        ` - autoowo:  ${getStatus(autoowo)}`,
+        ` - hotmode:  ${getStatus(hotmode)}`
+      ].join('\n');
+
+      helper.msgLogger(statusMsg);
+      await safeSend(channel, statusMsg);
+      return; // 執行完 status 就結束，不跑下面的邏輯
     }
-    if (helper.cleanText(message.content).includes("wh")) {
-      autowh = false;
-      hasMatched = true;
+
+    // --- 處理 &start/stop 指令 ---
+    if (action === "start" || action === "stop") {
+      const isEnable = action === "start";
+      
+      // 處理 hotmode: &start hotmode
+      if (target === "hotmode") {
+        hotmode = isEnable;
+        helper.msgLogger(`set hotmode = ${hotmode}`);
+      }
+
+      // 處理 ban 相關: &start ban [subTarget]
+      if (target === "ban") {
+        let hasMatched = false;
+        
+        if (subTarget) {
+          if (subTarget.includes("wb")) { autowb = isEnable; hasMatched = true; }
+          if (subTarget.includes("wh")) { autowh = isEnable; hasMatched = true; }
+          if (subTarget.includes("owo")) { 
+            autoowo = isEnable; 
+            hasMatched = true;
+            helper.msgLogger(`set autoowo = ${autoowo}`);
+          }
+        }
+
+        // 如果只有輸入 &start ban (沒指定 wb/wh/owo)，預設處理 wb 和 wh
+        if (!hasMatched) {
+          autowb = isEnable;
+          autowh = isEnable;
+        }
+
+        helper.msgLogger(`set autowb = ${autowb}`);
+        helper.msgLogger(`set autowh = ${autowh}`);
+      }
     }
-    if (helper.cleanText(message.content).includes("owo")) {
-      autoowo = false;
-      hasMatched = true;
-      helper.msgLogger(`set autoowo = ${autoowo}`);
-    }
-    if (!hasMatched) {
-      autowb = false;
-      autowh = false;
-    }
-    helper.msgLogger(`set autowb = ${autowb}`);
-    helper.msgLogger(`set autowh = ${autowh}`);
   }
 
   if (helper.cleanText(message.content).includes("spent 5 <:cowoncy:416043450337853441>")) {
@@ -158,7 +185,11 @@ async function checkMessageCreate(message, client){
   }
 
   if (helper.cleanText(message.content).includes("are you a real human") || helper.cleanText(message.content).includes("verify that you are human")) {
-    helper.msgLogger("🔥🔥🔥 There is a captcha 🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
     autowb = false;
     autowh = false;
     autoowo = false;

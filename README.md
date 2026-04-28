@@ -20,6 +20,21 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ---
 
+## [v1.1.0] - 2026-04-28 <a id="v110"></a>
+
+### 🚀 Added
+- **Command Prefix Support**: Implemented `&` as a mandatory prefix for all control commands (e.g., `&start`) to prevent accidental triggers during regular conversation.
+- **New `&status` Command**: Added a diagnostic command to display the current state of all toggles (`autowb`, `autowh`, `autoowo`, `hotmode`) with intuitive `[ON] / [OFF]` indicators.
+
+### 🛠 Optimized
+- **Refactored Command Logic**:
+    - Replaced redundant `if` blocks with an argument-based parser using `split()`, significantly improving code maintainability.
+    - Consolidated `start` and `stop` logic into a single streamlined flow using a boolean state toggle.
+- **Formatted Logging**:
+    - Enhanced `msgLogger` and `msgDebugger` using `padEnd()` to ensure log tags (`--normal--` and `--Debug--`) are perfectly aligned in the console for better readability.
+
+---
+
 ## [v1.0.3] - 2026-04-23 <a id="v103"></a>
 
 ### 🚀 Added

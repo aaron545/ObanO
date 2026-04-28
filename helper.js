@@ -12,16 +12,21 @@ function messageExtractor(message) {
   };
 }
 
-function msgLogger(msg) {
+function baseLogger(label, msg) {
   const now = new Date();
-  const formattedTime = now.toLocaleString("zh-TW-u-hc-h23", { timeZone: "Asia/Taipei", hour12: false }); // 轉成 "YYYY-MM-DD HH:MM:SS"
-  console.log(`[${formattedTime}] --normal-- ${msg}`);
+  const formattedTime = now.toLocaleString("zh-TW-u-hc-h23", { timeZone: "Asia/Taipei", hour12: false });
+  
+  // 統一在這裡處理對齊
+  const paddedLabel = `--${label}--`.padEnd(11);
+  console.log(`[${formattedTime}] ${paddedLabel} ${msg}`);
+}
+
+function msgLogger(msg) {
+  baseLogger("normal", msg);
 }
 
 function msgDebugger(msg) {
-  const now = new Date();
-  const formattedTime = now.toLocaleString("zh-TW-u-hc-h23", { timeZone: "Asia/Taipei", hour12: false }); // 轉成 "YYYY-MM-DD HH:MM:SS"
-  console.log(`[${formattedTime}] --Debug-- ${msg}`);
+  baseLogger("Debug", msg);
 }
 
 function cleanText(str) {

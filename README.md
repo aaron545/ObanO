@@ -16,7 +16,20 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🔗 Versions
 
+[1.1.1](#v110) | [1.1.0](#v100)
 [1.0.3](#v103) | [1.0.2](#v102) | [1.0.1](#v101) | [1.0.0](#v100)
+
+---
+
+## [v1.1.1] - 2026-04-30 <a id="v111"></a>
+
+### 💄 UI/UX Improvements
+- **Footer Data Alignment**: Enhanced the visual structure of the game summary footer by implementing `padEnd()` to standardize string lengths.
+- **Improved Readability**: All log components (Game Result, XP, and Streak) now occupy fixed-width fields, ensuring that the delimiter (` | `) remains vertically aligned across multiple entries.
+
+### 🛠 Technical Changes
+- **Standardized Padding Logic**: Applied `padEnd()` to each segment of the footer string to prevent text jaggedness caused by variable message lengths (e.g., "You won" vs. "It's a tie").
+- **Console Optimization**: Refined the `msgLogger` output flow to ensure that even with dynamic content, the console maintain a clean, table-like appearance.
 
 ---
 

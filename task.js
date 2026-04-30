@@ -72,7 +72,7 @@ async function startAutoCatch(client) {
     if (autowb) {
       count += 1;
 
-      if (count > MAXCOUNT-10) {
+      if (count > MAXCOUNT-10 && !hotmode) {
         helper.msgDebugger(`count = ${count}`);
       }
 
@@ -111,7 +111,7 @@ async function checkMessageCreate(message, client){
   const channel = client.channels.cache.get(ownchannelId);
 
   if (embedAuthor.includes(client.user.globalName) && embedAuthor.includes("goes into battle!") && message.author.username == "OwO") {
-    helper.msgLogger(footer);
+    helper.msgLogger(helper.formatFooter(footer));
   }
 
   // 確保是本人發出且以 & 開頭

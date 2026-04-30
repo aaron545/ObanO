@@ -35,9 +35,25 @@ function cleanText(str) {
   return str.replace(/[\u200B-\u200D\uFEFF]/g, '');
 }
 
+function formatFooter(footer) {
+  const parts = footer.split('|').map(p => p.trim());
+  
+  // 第一段：遊戲結果 (左對齊)
+  const result = parts[0].padEnd(25);
+  
+  // 第二段：XP (左對齊數字部分)
+  const xp = parts[1].padEnd(10);
+  
+  // 第三段：Streak (左對齊標籤)
+  const streak = parts[2]; 
+
+  return `${result} | ${xp} | ${streak}`;
+}
+
 module.exports = { 
   messageExtractor,
   msgLogger,
   msgDebugger,
   cleanText,
+  formatFooter,
 };

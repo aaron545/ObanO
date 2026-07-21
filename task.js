@@ -50,6 +50,21 @@ function safeSend(channel, content) {
   });
 }
 
+async function printStatus(client, channelId) {
+  const getStatus = (val) => val ? "[ON]" : "[OFF]"; // 輔助小函數
+
+  const statusMsg = [
+    `Current Settings:`,
+    ` - autowb:   ${getStatus(autowb)}`,
+    ` - autowh:   ${getStatus(autowh)}`,
+    ` - autoowo:  ${getStatus(autoowo)}`,
+    ` - hotmode:  ${getStatus(hotmode)}`
+  ].join('\n');
+
+  helper.msgLogger(statusMsg);
+  await safeSend(client.channels.cache.get(channelId), statusMsg);
+}
+
 async function startAutoCatch(client) {
   const channel = client.channels.cache.get(ownchannelId);
   const delay = (ms) => new Promise(r => setTimeout(r, ms));
@@ -127,18 +142,8 @@ async function checkMessageCreate(message, client){
 
     // --- 處理 &status 指令 ---
     if (action === "status") {
-      const getStatus = (val) => val ? "[ON]" : "[OFF]"; // 輔助小函數
+      printStatus(client, message.channelId, autowb, autowh, autoowo, hotmode)
 
-      const statusMsg = [
-        `Current Settings:`,
-        ` - autowb:   ${getStatus(autowb)}`,
-        ` - autowh:   ${getStatus(autowh)}`,
-        ` - autoowo:  ${getStatus(autoowo)}`,
-        ` - hotmode:  ${getStatus(hotmode)}`
-      ].join('\n');
-
-      helper.msgLogger(statusMsg);
-      await safeSend(client.channels.cache.get(message.channelId), statusMsg);
       return; // 執行完 status 就結束，不跑下面的邏輯
     }
 
@@ -166,14 +171,24 @@ async function checkMessageCreate(message, client){
           }
         }
 
-        // 如果只有輸入 &start ban (沒指定 wb/wh/owo)，預設處理 wb 和 wh
+        // 如果只有輸入 &start ban 或 &stop ban (沒指定 wb/wh/owo)
         if (!hasMatched) {
-          autowb = isEnable;
-          autowh = isEnable;
+          if (isEnable) {
+            // &start ban
+            autowb = true;
+            autowh = true;
+          } else {
+            // &stop ban
+            autowb = false;
+            autowh = false;
+            autoowo = false;
+            helper.msgLogger(`set autoowo = ${autoowo}`);
+          }
         }
 
         helper.msgLogger(`set autowb = ${autowb}`);
         helper.msgLogger(`set autowh = ${autowh}`);
+        printStatus(client, message.channelId)
       }
     }
   }

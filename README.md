@@ -16,8 +16,15 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ### 🔗 Versions
 
-[1.1.1](#v110) | [1.1.0](#v100)
+[1.1.3](#v113) | [1.1.2](#v102) | [1.1.1](#v110) | [1.1.0](#v100)
 [1.0.3](#v103) | [1.0.2](#v102) | [1.0.1](#v101) | [1.0.0](#v100)
+
+---
+
+## [v1.1.3] - 2026-07-21 <a id="v113"></a>
+
+### 💄 Code Quality Improvements
+- **Cleaner Function Interface**: Simplified `printStatus()` usage by only requiring the necessary Discord client and channel information.
 
 ---
 

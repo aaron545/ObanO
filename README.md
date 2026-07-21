@@ -21,6 +21,14 @@ Edit content of `sampleconfig.json` and rename it as `config.json`.
 
 ---
 
+## [v1.1.2] - 2026-07-21 <a id="v112"></a>
+
+### 🛠 Technical Changes
+- **Expanded Command Scope**: Updated command validation logic to accept command execution from all channels within the same guild.
+- **Channel Restriction Removal**: Removed channel-specific execution requirements while maintaining guild-level access control.
+
+---
+
 ## [v1.1.1] - 2026-04-30 <a id="v111"></a>
 
 ### 💄 UI/UX Improvements

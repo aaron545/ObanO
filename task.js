@@ -86,7 +86,7 @@ async function startAutoCatch(client) {
     }
 
     if (hotmode) {
-      await randomDelay(18, 2);
+      await randomDelay(17, 1);
     } else {
       await randomDelay(27, 9);
 
@@ -138,7 +138,7 @@ async function checkMessageCreate(message, client){
       ].join('\n');
 
       helper.msgLogger(statusMsg);
-      await safeSend(channel, statusMsg);
+      await safeSend(client.channels.cache.get(message.channelId), statusMsg);
       return; // 執行完 status 就結束，不跑下面的邏輯
     }
 
@@ -185,11 +185,10 @@ async function checkMessageCreate(message, client){
   }
 
   if (helper.cleanText(message.content).includes("are you a real human") || helper.cleanText(message.content).includes("verify that you are human")) {
-    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
-    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
-    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
-    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
-    helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    for(let i = 0; i < 10; i++) {
+      helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    }
+    
     autowb = false;
     autowh = false;
     autoowo = false;

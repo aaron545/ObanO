@@ -49,7 +49,7 @@ client.on('ready', async () => {
 })
 
 client.on('messageCreate', async (message) => {
-  if (message.channelId != ownchannelId) return;
+  if (message.guildId != guildId) return;
   checkMessageCreate(message, client);
 
 })

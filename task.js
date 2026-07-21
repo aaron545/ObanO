@@ -200,16 +200,18 @@ async function checkMessageCreate(message, client){
   }
 
   if (helper.cleanText(message.content).includes("are you a real human") || helper.cleanText(message.content).includes("verify that you are human")) {
-    for(let i = 0; i < 10; i++) {
-      helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+    if (helper.cleanText(message.content).includes(client.user.id)) {
+      for(let i = 0; i < 10; i++) {
+        helper.msgLogger("🔥🔥🔥🔥🔥🔥🔥 There is a captcha 🔥🔥🔥🔥🔥🔥🔥");
+      }
+      
+      autowb = false;
+      autowh = false;
+      autoowo = false;
+      helper.msgLogger(`set autowb = ${autowb}`);
+      helper.msgLogger(`set autowh = ${autowh}`);
+      helper.msgLogger(`set autoowo = ${autoowo}`);
     }
-    
-    autowb = false;
-    autowh = false;
-    autoowo = false;
-    helper.msgLogger(`set autowb = ${autowb}`);
-    helper.msgLogger(`set autowh = ${autowh}`);
-    helper.msgLogger(`set autoowo = ${autoowo}`);
   }
 
 }
